@@ -1,0 +1,17 @@
+prometheus:
+  prometheusSpec:
+    nodeSelector:
+      monitoring: "true"
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+
+grafana:
+  nodeSelector:
+    monitoring: "true"
+
+alertmanager:
+  alertmanagerSpec:
+    nodeSelector:
+      monitoring: "true"
