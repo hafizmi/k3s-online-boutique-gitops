@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://github.com/stefanprodan/podinfo//deploy/kubernetes?ref=master
+
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/nodeSelector
+        value:
+          app: online-boutique     # worker-node-1
+      - op: replace
+        path: /spec/replicas
+        value: 1

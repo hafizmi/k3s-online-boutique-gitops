@@ -1,25 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: online-boutique
+  name: podinfo
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/GoogleCloudPlatform/microservices-demo.git
+    repoURL: https://github.com/hafizmi/k3s-online-boutique-gitops.git
     targetRevision: main
-    path: ./kubernetes-manifests
+    path: apps/podinfo
   destination:
     server: https://kubernetes.default.svc
-    namespace: online-boutique
+    namespace: podinfo
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/template/spec/nodeSelector
+      - ServerSideApply=true
